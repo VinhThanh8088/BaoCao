@@ -13,7 +13,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .sidebar-icon { width: 24px; height: 24px; }
-        .chart-container { position: relative; width: 100%; margin-left: auto; margin-right: auto; height: 250px; sm:height: 300px; md:height: 350px; max-height: 400px; }
+        .chart-container { position: relative; width: 100%; margin: auto; height: 350px; max-height: 400px; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -25,7 +25,7 @@
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800">
-    <div id="loading-state" class="flex items-center justify-center h-screen">
+    <div id="loading-state" class="fixed inset-0 bg-white flex items-center justify-center z-50">
         <div class="text-center p-4">
             <div class="spinner mx-auto mb-4"></div>
             <h2 class="text-2xl font-semibold text-slate-700 mb-2">Đang tải dữ liệu...</h2>
@@ -33,11 +33,11 @@
         </div>
     </div>
 
-    <div id="error-state" class="hidden flex items-center justify-center h-screen">
-        <div class="text-center p-4">
+    <div id="error-state" class="hidden fixed inset-0 bg-white flex items-center justify-center z-50">
+        <div class="text-center p-4 max-w-md">
             <h2 class="text-2xl font-semibold text-rose-700 mb-2">Lỗi Dữ Liệu</h2>
-            <p class="text-slate-500 mb-4">Dữ liệu trong URL không hợp lệ hoặc bị hỏng.</p>
-            <button onclick="window.location.reload()" class="bg-amber-500 text-white px-4 py-2 rounded-md hover:bg-amber-600">Tải lại</button>
+            <p class="text-slate-500 mb-4">Không thể đọc dữ liệu từ URL. Dữ liệu có thể bị hỏng hoặc không đúng định dạng. Vui lòng kiểm tra lại URL được tạo từ AppSheet.</p>
+            <button onclick="window.location.reload()" class="bg-amber-500 text-white px-4 py-2 rounded-md hover:bg-amber-600">Thử lại</button>
         </div>
     </div>
 
@@ -50,19 +50,19 @@
             <nav class="flex-1 pt-2 sm:pt-6 space-y-2 flex sm:flex-col flex-row justify-around sm:justify-start">
                 <a href="#" onclick="showView('tongQuan')" class="nav-link bg-amber-50 border-b-4 sm:border-b-0 sm:border-r-4 border-amber-500 text-amber-600 flex flex-col sm:flex-row items-center py-3 px-2 sm:px-6 text-center">
                     <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    <span class="text-xs sm:text-sm md:text-base hidden md:inline sm:ml-4 font-medium">Tổng Quan</span>
+                    <span class="text-xs sm:text-sm md:text-base md:ml-4 font-medium">Tổng Quan</span>
                 </a>
                 <a href="#" onclick="showView('phanTichBanHang')" class="nav-link text-slate-600 hover:bg-amber-50 hover:text-amber-600 flex flex-col sm:flex-row items-center py-3 px-2 sm:px-6 text-center">
                     <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    <span class="text-xs sm:text-sm md:text-base hidden md:inline sm:ml-4 font-medium">Bán Hàng</span>
+                    <span class="text-xs sm:text-sm md:text-base md:ml-4 font-medium">Bán Hàng</span>
                 </a>
                 <a href="#" onclick="showView('khoHang')" class="nav-link text-slate-600 hover:bg-amber-50 hover:text-amber-600 flex flex-col sm:flex-row items-center py-3 px-2 sm:px-6 text-center">
                     <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span class="text-xs sm:text-sm md:text-base hidden md:inline sm:ml-4 font-medium">Kho Hàng</span>
+                    <span class="text-xs sm:text-sm md:text-base md:ml-4 font-medium">Kho Hàng</span>
                 </a>
                 <a href="#" onclick="showView('khachHang')" class="nav-link text-slate-600 hover:bg-amber-50 hover:text-amber-600 flex flex-col sm:flex-row items-center py-3 px-2 sm:px-6 text-center">
                     <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    <span class="text-xs sm:text-sm md:text-base hidden md:inline sm:ml-4 font-medium">Khách Hàng</span>
+                    <span class="text-xs sm:text-sm md:text-base md:ml-4 font-medium">Khách Hàng</span>
                 </a>
             </nav>
         </aside>
@@ -77,7 +77,7 @@
                         <option value="30" selected>30 ngày qua</option>
                         <option value="90">90 ngày qua</option>
                         <option value="365">1 năm qua</option>
-                        <option value="9999">Tất cả</option>
+                        <option value="all">Tất cả</option>
                     </select>
                 </div>
             </div>
@@ -86,7 +86,7 @@
     </div>
 
 <script>
-// --- TEMPLATES FOR VIEWS ---
+// --- TEMPLATES CHO CÁC VIEW ---
 const viewTemplates = {
     tongQuan: `
         <div id="tongQuan-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -95,10 +95,10 @@ const viewTemplates = {
             <div class="bg-white p-6 rounded-xl border border-slate-200 kpi-card"><h3 class="text-slate-500 text-sm font-medium mb-2">Tổng Đơn Hàng</h3><p id="kpi-don-hang" class="text-2xl md:text-3xl font-bold text-sky-600">0</p></div>
             <div class="bg-white p-6 rounded-xl border border-slate-200 kpi-card"><h3 class="text-slate-500 text-sm font-medium mb-2">Tỷ Lệ Lợi Nhuận</h3><p id="kpi-ty-le-loi-nhuan" class="text-2xl md:text-3xl font-bold text-violet-600">0%</p></div>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 mb-8">
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
             <h3 class="text-lg font-semibold mb-4">Tổng Quan Doanh Thu & Lợi Nhuận</h3>
             <div id="overviewChartContainer" class="chart-container"><canvas id="overviewChart"></canvas></div>
-            <p id="overviewChartEmpty" class="hidden text-center text-slate-500 mt-4">Không có dữ liệu để hiển thị biểu đồ.</p>
+            <p id="overviewChartEmpty" class="hidden text-center text-slate-500 mt-8">Không có dữ liệu để hiển thị biểu đồ.</p>
         </div>
     `,
     phanTichBanHang: `
@@ -106,12 +106,12 @@ const viewTemplates = {
             <div class="bg-white p-6 rounded-xl border border-slate-200">
                 <h3 class="text-lg font-semibold mb-4">Phân Bổ Doanh Thu Theo Loại Sản Phẩm</h3>
                 <div id="categorySalesChartContainer" class="chart-container"><canvas id="categorySalesChart"></canvas></div>
-                <p id="categorySalesChartEmpty" class="hidden text-center text-slate-500 mt-4">Không có dữ liệu để hiển thị biểu đồ.</p>
+                <p id="categorySalesChartEmpty" class="hidden text-center text-slate-500 mt-8">Không có dữ liệu để hiển thị biểu đồ.</p>
             </div>
             <div class="bg-white p-6 rounded-xl border border-slate-200">
                 <h3 class="text-lg font-semibold mb-4">Top 5 Sản Phẩm Doanh Thu Cao Nhất</h3>
                 <div id="topProductRevenueChartContainer" class="chart-container"><canvas id="topProductRevenueChart"></canvas></div>
-                <p id="topProductRevenueChartEmpty" class="hidden text-center text-slate-500 mt-4">Không có dữ liệu để hiển thị biểu đồ.</p>
+                <p id="topProductRevenueChartEmpty" class="hidden text-center text-slate-500 mt-8">Không có dữ liệu để hiển thị biểu đồ.</p>
             </div>
         </div>
     `,
@@ -124,7 +124,7 @@ const viewTemplates = {
             <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-slate-200">
                 <h3 class="text-lg font-semibold mb-4">Danh Sách Sản Phẩm Cần Nhập Hàng</h3>
                 <div class="max-h-[60vh] overflow-y-auto">
-                    <table class="w-full text-sm text-left"><thead class="text-xs text-slate-500 uppercase bg-slate-100 sticky top-0"><tr><th class="px-4 py-3">Sản Phẩm</th><th class="px-4 py-3 text-center">Tồn Kho</th><th class="px-4 py-3 text-center">Mức Tối Thiểu</th></tr></thead><tbody id="lowStockTableBody"></tbody></table>
+                    <table class="w-full text-sm text-left"><thead class="text-xs text-slate-500 uppercase bg-slate-100 sticky top-0 z-10"><tr><th class="px-4 py-3">Sản Phẩm</th><th class="px-4 py-3 text-center">Tồn Kho</th><th class="px-4 py-3 text-center">Mức Tối Thiểu</th></tr></thead><tbody id="lowStockTableBody"></tbody></table>
                 </div>
             </div>
         </div>
@@ -134,114 +134,159 @@ const viewTemplates = {
             <div class="bg-white p-6 rounded-xl border border-slate-200">
                 <h3 class="text-lg font-semibold mb-4">Top 5 Khách Hàng Chi Tiêu Nhiều Nhất</h3>
                 <div id="topCustomerChartContainer" class="chart-container"><canvas id="topCustomerChart"></canvas></div>
-                <p id="topCustomerChartEmpty" class="hidden text-center text-slate-500 mt-4">Không có dữ liệu để hiển thị biểu đồ.</p>
+                <p id="topCustomerChartEmpty" class="hidden text-center text-slate-500 mt-8">Không có dữ liệu để hiển thị biểu đồ.</p>
             </div>
-            <div class="bg-white p-6 rounded-xl border border-slate-200"><h3 class="text-lg font-semibold mb-4">Phân Bổ Khách Hàng</h3><div class="grid grid-cols-2 gap-4 pt-4"><div class="text-center"><p class="text-3xl md:text-4xl font-bold text-sky-600" id="total-customers">0</p><p class="text-sm text-slate-500 mt-1">Tổng số khách hàng</p></div><div class="text-center"><p class="text-3xl md:text-4xl font-bold text-emerald-600" id="new-customers">0</p><p class="text-sm text-slate-500 mt-1">Khách hàng mới (trong kỳ)</p></div></div></div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200">
+                <h3 class="text-lg font-semibold mb-4">Phân Bổ Khách Hàng</h3>
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <div class="text-center"><p class="text-3xl md:text-4xl font-bold text-sky-600" id="total-customers">0</p><p class="text-sm text-slate-500 mt-1">Tổng số khách hàng</p></div>
+                    <div class="text-center"><p class="text-3xl md:text-4xl font-bold text-emerald-600" id="new-customers">0</p><p class="text-sm text-slate-500 mt-1">Khách hàng trong kỳ</p></div>
+                </div>
+            </div>
         </div>
     `
 };
 
-// --- DATABASE ---
-let database = { sanPhams: [], khachHangs: [], donHangs: [], chiTietDonHangs: [], chiTietPhieuNhaps: [] };
-
-// --- GLOBAL STATE & CHARTS ---
+// --- CƠ SỞ DỮ LIỆU & TRẠNG THÁI TOÀN CỤC ---
+let rawDatabase = {};
 let state = { currentView: 'tongQuan' };
 let charts = {};
 
-// --- UTILITY FUNCTIONS ---
-const formatCurrency = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-
+// --- CÁC HÀM TIỆN ÍCH ---
+const formatCurrency = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value || 0);
 const parseNumber = (value) => {
-    const num = Number(value);
+    const num = parseFloat(value);
     return isNaN(num) ? 0 : num;
 };
-
-const parseDate = (dateStr) => {
-    if (!dateStr) return null;
-    const parts = dateStr.split(/[\s/:]+/);
-    if (parts.length < 6) return null;
-    const [month, day, year, hour, minute, second] = parts;
+const parseAndValidateDate = (dateStr) => {
+    if (!dateStr || typeof dateStr !== 'string') return null;
+    const parts = dateStr.match(/(\d{2})[\/](\d{2})[\/](\d{4})\s(\d{2}):(\d{2}):(\d{2})/);
+    if (!parts) return null;
+    const [, month, day, year, hour, minute, second] = parts.map(Number);
     const date = new Date(year, month - 1, day, hour, minute, second);
-    return isNaN(date.getTime()) ? null : date;
+    return (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) ? date : null;
 };
 
-// --- DATA LOADING & PROCESSING ---
-function loadDataFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const dataParam = urlParams.get('data');
-    if (!dataParam) return false;
+// --- HIỂN THỊ/ẨN BIỂU ĐỒ HOẶC THÔNG BÁO RỖNG ---
+function toggleChartVisibility(chartId, hasData) {
+    document.getElementById(`${chartId}Container`).classList.toggle('hidden', !hasData);
+    document.getElementById(`${chartId}Empty`).classList.toggle('hidden', hasData);
+}
 
+// --- HỦY BIỂU ĐỒ ---
+function destroyCharts() {
+    Object.values(charts).forEach(chart => chart.destroy());
+    charts = {};
+}
+
+// --- TẢI VÀ XÁC THỰC DỮ LIỆU ---
+function loadAndSanitizeDataFromUrl() {
     try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get('data');
+        if (!dataParam) throw new Error("Không tìm thấy tham số 'data' trong URL.");
+
         const decodedData = JSON.parse(decodeURIComponent(atob(dataParam)));
-        database = {
-            sanPhams: decodedData.sanPhams || [],
-            khachHangs: decodedData.khachHangs || [],
-            donHangs: decodedData.donHangs || [],
-            chiTietDonHangs: decodedData.chiTietDonHangs || [],
-            chiTietPhieuNhaps: decodedData.chiTietPhieuNhaps || []
+        
+        // [CẢI TIẾN] "Làm sạch" dữ liệu: loại bỏ các phần tử null hoặc không hợp lệ
+        rawDatabase = {
+            sanPhams: (decodedData.sanPhams || []).filter(p => p && p.MaSP),
+            khachHangs: (decodedData.khachHangs || []).filter(c => c && c.MaKH),
+            donHangs: (decodedData.donHangs || []).filter(o => o && o.MaDonHang),
+            chiTietDonHangs: (decodedData.chiTietDonHangs || []).filter(d => d && d.MaDonHang && d.MaSP),
+            chiTietPhieuNhaps: (decodedData.chiTietPhieuNhaps || []).filter(i => i && i.MaSP)
         };
         return true;
     } catch (e) {
-        console.error("Lỗi giải mã dữ liệu từ URL:", e);
+        console.error("Lỗi giải mã hoặc làm sạch dữ liệu từ URL:", e);
         document.getElementById('loading-state').classList.add('hidden');
         document.getElementById('error-state').classList.remove('hidden');
         return false;
     }
 }
 
-function processAllData() {
-    const days = parseInt(document.getElementById('date-filter').value);
+// --- [TỐI ƯU] XỬ LÝ DỮ LIỆU ---
+function processData() {
+    const daysFilter = document.getElementById('date-filter').value;
     const startDate = new Date();
-    startDate.setHours(0, 0, 0, 0);
-    startDate.setDate(startDate.getDate() - days);
-
-    // Lọc đơn hàng hợp lệ
-    const filteredDonHangs = database.donHangs.filter(dh => {
-        if (!dh.NgayTao || !dh.MaKH || parseNumber(dh.TongTien) === 0) return false;
-        const date = parseDate(dh.NgayTao);
-        return date && date >= startDate;
+    if (daysFilter !== 'all') {
+        startDate.setDate(startDate.getDate() - parseInt(daysFilter));
+        startDate.setHours(0, 0, 0, 0);
+    } else {
+        startDate.setTime(0); // Bắt đầu từ thời gian xa xưa nhất
+    }
+    
+    // [TỐI ƯU] Tạo các bảng tra cứu (lookup maps) để tăng tốc độ truy vấn.
+    const productMap = new Map(rawDatabase.sanPhams.map(p => [p.MaSP, p]));
+    const customerMap = new Map(rawDatabase.khachHangs.map(c => [c.MaKH, c]));
+    
+    const salesByProduct = new Map();
+    const importsByProduct = new Map();
+    
+    rawDatabase.chiTietDonHangs.forEach(d => {
+        const quantity = parseNumber(d.SoLuong);
+        salesByProduct.set(d.MaSP, (salesByProduct.get(d.MaSP) || 0) + quantity);
     });
 
-    const filteredDonHangIds = new Set(filteredDonHangs.map(dh => dh.MaDonHang));
-    const filteredChiTiet = database.chiTietDonHangs.filter(ct => filteredDonHangIds.has(ct.MaDonHang));
-
-    // Tính tồn kho
-    const sanPhamsWithTonKho = database.sanPhams.map(sp => {
-        const totalNhap = database.chiTietPhieuNhaps
-            .filter(pn => pn.MaSP === sp.MaSP)
-            .reduce((sum, item) => sum + parseNumber(item.SoLuong), 0);
-        const totalBan = database.chiTietDonHangs
-            .filter(dh => dh.MaSP === sp.MaSP)
-            .reduce((sum, item) => sum + parseNumber(item.SoLuong), 0);
-        return { ...sp, TonKho: totalNhap - totalBan };
+    rawDatabase.chiTietPhieuNhaps.forEach(i => {
+        const quantity = parseNumber(i.SoLuong);
+        importsByProduct.set(i.MaSP, (importsByProduct.get(i.MaSP) || 0) + quantity);
     });
 
-    // Tính doanh thu và lợi nhuận
-    const donHangsWithTotals = filteredDonHangs.map(dh => {
-        const details = filteredChiTiet.filter(ct => ct.MaDonHang === dh.MaDonHang);
-        const tongTien = parseNumber(dh.TongTien) || details.reduce((sum, item) => sum + (parseNumber(item.SoLuong) * parseNumber(item.DonGia)), 0);
-        const loiNhuan = details.reduce((sum, item) => {
-            const donGia = parseNumber(item.DonGia);
-            const giaNhap = parseNumber(item.GiaNhapHienThi || item.GiaNhap);
-            return sum + (parseNumber(item.SoLuong) * (donGia - giaNhap));
-        }, 0);
-        return { ...dh, TongTien: tongTien, LoiNhuan: loiNhuan };
+    // Tính tồn kho một lần duy nhất
+    const productsWithInventory = rawDatabase.sanPhams.map(p => ({
+        ...p,
+        TonKho: (importsByProduct.get(p.MaSP) || 0) - (salesByProduct.get(p.MaSP) || 0)
+    }));
+    
+    // Lọc chi tiết đơn hàng hợp lệ
+    const validOrderDetails = rawDatabase.chiTietDonHangs.filter(d => {
+        return parseNumber(d.SoLuong) > 0 && parseNumber(d.DonGia) >= 0 && productMap.has(d.MaSP);
     });
 
-    return { sanPhamsWithTonKho, donHangsWithTotals, filteredChiTiet };
+    // Nhóm chi tiết đơn hàng theo MaDonHang
+    const detailsByOrder = validOrderDetails.reduce((acc, detail) => {
+        if (!acc[detail.MaDonHang]) acc[detail.MaDonHang] = [];
+        acc[detail.MaDonHang].push(detail);
+        return acc;
+    }, {});
+
+    // Lọc và xử lý đơn hàng
+    const processedOrders = rawDatabase.donHangs
+        .map(order => {
+            const date = parseAndValidateDate(order.NgayTao);
+            const details = detailsByOrder[order.MaDonHang] || [];
+            
+            // [CẢI TIẾN] Lọc đơn hàng dựa trên ngày, có khách hàng, và phải có chi tiết hợp lệ.
+            if (!date || date < startDate || !customerMap.has(order.MaKH) || details.length === 0) {
+                return null;
+            }
+
+            const tongTien = details.reduce((sum, item) => sum + (parseNumber(item.SoLuong) * parseNumber(item.DonGia)), 0);
+            const loiNhuan = details.reduce((sum, item) => {
+                const donGia = parseNumber(item.DonGia);
+                const giaNhap = parseNumber(item.GiaNhapHienThi) || parseNumber(item.GiaNhap) || 0;
+                return sum + (parseNumber(item.SoLuong) * (donGia - giaNhap));
+            }, 0);
+            
+            return { ...order, NgayTaoObj: date, TongTien: tongTien, LoiNhuan: loiNhuan, Details: details };
+        })
+        .filter(Boolean); // Loại bỏ các đơn hàng null (không hợp lệ)
+
+    return { productsWithInventory, processedOrders, productMap, customerMap };
 }
 
-// --- RENDERING FUNCTIONS ---
+
+// --- CÁC HÀM RENDER ---
 function renderAll() {
-    const processedData = processAllData();
+    const processedData = processData();
     showView(state.currentView, true, processedData);
 }
 
-function renderTongQuan(processedData) {
-    const { donHangsWithTotals } = processedData;
-    const totalDoanhThu = donHangsWithTotals.reduce((sum, dh) => sum + dh.TongTien, 0);
-    const totalLoiNhuan = donHangsWithTotals.reduce((sum, dh) => sum + dh.LoiNhuan, 0);
-    const totalDonHang = donHangsWithTotals.length;
+function renderTongQuan({ processedOrders }) {
+    const totalDoanhThu = processedOrders.reduce((sum, dh) => sum + dh.TongTien, 0);
+    const totalLoiNhuan = processedOrders.reduce((sum, dh) => sum + dh.LoiNhuan, 0);
+    const totalDonHang = processedOrders.length;
     const tyLeLoiNhuan = totalDoanhThu > 0 ? (totalLoiNhuan / totalDoanhThu) * 100 : 0;
 
     document.getElementById('kpi-doanh-thu').textContent = formatCurrency(totalDoanhThu);
@@ -249,215 +294,124 @@ function renderTongQuan(processedData) {
     document.getElementById('kpi-don-hang').textContent = totalDonHang;
     document.getElementById('kpi-ty-le-loi-nhuan').textContent = `${tyLeLoiNhuan.toFixed(1)}%`;
 
-    const ctx = document.getElementById('overviewChart').getContext('2d');
-    if (charts.overview) charts.overview.destroy();
-
-    const salesByDay = donHangsWithTotals.reduce((acc, order) => {
-        const date = parseDate(order.NgayTao);
-        if (!date) return acc;
-        const dateKey = date.toISOString().split('T')[0];
+    const salesByDay = processedOrders.reduce((acc, order) => {
+        const dateKey = order.NgayTaoObj.toISOString().split('T')[0];
         acc[dateKey] = acc[dateKey] || { doanhThu: 0, loiNhuan: 0 };
         acc[dateKey].doanhThu += order.TongTien;
         acc[dateKey].loiNhuan += order.LoiNhuan;
         return acc;
     }, {});
-
+    
     const sortedDates = Object.keys(salesByDay).sort();
-    const chartContainer = document.getElementById('overviewChartContainer');
-    const emptyMessage = document.getElementById('overviewChartEmpty');
-
-    if (sortedDates.length === 0) {
-        chartContainer.classList.add('hidden');
-        emptyMessage.classList.remove('hidden');
-        return;
+    toggleChartVisibility('overviewChart', sortedDates.length > 0);
+    
+    if (sortedDates.length > 0) {
+        charts.overview = new Chart(document.getElementById('overviewChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: sortedDates,
+                datasets: [
+                    { type: 'bar', label: 'Doanh Thu', data: sortedDates.map(d => salesByDay[d].doanhThu), backgroundColor: 'rgba(245, 158, 11, 0.6)', yAxisID: 'y' },
+                    { type: 'line', label: 'Lợi Nhuận', data: sortedDates.map(d => salesByDay[d].loiNhuan), borderColor: 'rgb(16, 185, 129)', backgroundColor: 'rgba(16, 185, 129, 0.1)', fill: true, tension: 0.3, yAxisID: 'y1' }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'time', time: { unit: 'day', tooltipFormat: 'dd/MM/yyyy' }}, y: { position: 'left', beginAtZero: true }, y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false } } } }
+        });
     }
-
-    chartContainer.classList.remove('hidden');
-    emptyMessage.classList.add('hidden');
-
-    charts.overview = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: sortedDates,
-            datasets: [
-                {
-                    type: 'bar',
-                    label: 'Doanh Thu',
-                    data: sortedDates.map(date => salesByDay[date].doanhThu),
-                    backgroundColor: 'rgba(245, 158, 11, 0.6)',
-                    yAxisID: 'y'
-                },
-                {
-                    type: 'line',
-                    label: 'Lợi Nhuận',
-                    data: sortedDates.map(date => salesByDay[date].loiNhuan),
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    yAxisID: 'y1'
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: { type: 'time', time: { unit: 'day', tooltipFormat: 'dd/MM/yyyy' } },
-                y: { position: 'left', beginAtZero: true, grid: { drawOnChartArea: false } },
-                y1: { position: 'right', beginAtZero: true }
-            }
-        }
-    });
 }
 
-function renderPhanTichBanHang(processedData) {
-    const { filteredChiTiet } = processedData;
+function renderPhanTichBanHang({ processedOrders, productMap }) {
+    const allDetails = processedOrders.flatMap(o => o.Details);
 
-    const ctxCategory = document.getElementById('categorySalesChart').getContext('2d');
-    if (charts.category) charts.category.destroy();
-
-    const salesByCategory = filteredChiTiet.reduce((acc, item) => {
-        const product = database.sanPhams.find(p => p.MaSP === item.MaSP);
-        const category = product ? product.PhanLoai : 'Khác';
+    const salesByCategory = allDetails.reduce((acc, item) => {
+        const product = productMap.get(item.MaSP);
+        const category = (product && product.PhanLoai) ? product.PhanLoai : 'Khác';
         const revenue = parseNumber(item.SoLuong) * parseNumber(item.DonGia);
         acc[category] = (acc[category] || 0) + revenue;
         return acc;
     }, {});
-
-    const categoryChartContainer = document.getElementById('categorySalesChartContainer');
-    const categoryEmptyMessage = document.getElementById('categorySalesChartEmpty');
-
-    if (Object.keys(salesByCategory).length === 0) {
-        categoryChartContainer.classList.add('hidden');
-        categoryEmptyMessage.classList.remove('hidden');
-    } else {
-        categoryChartContainer.classList.remove('hidden');
-        categoryEmptyMessage.classList.add('hidden');
-        charts.category = new Chart(ctxCategory, {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(salesByCategory),
-                datasets: [{
-                    data: Object.values(salesByCategory),
-                    backgroundColor: ['rgba(245, 158, 11, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(59, 130, 246, 0.8)']
-                }]
-            },
+    
+    toggleChartVisibility('categorySalesChart', Object.keys(salesByCategory).length > 0);
+    if (Object.keys(salesByCategory).length > 0) {
+        charts.category = new Chart(document.getElementById('categorySalesChart').getContext('2d'), {
+            type: 'doughnut', data: { labels: Object.keys(salesByCategory), datasets: [{ data: Object.values(salesByCategory), backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'] }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
     }
-
-    const ctxTopProduct = document.getElementById('topProductRevenueChart').getContext('2d');
-    if (charts.topProduct) charts.topProduct.destroy();
-
-    const revenueByProduct = filteredChiTiet.reduce((acc, item) => {
+    
+    const revenueByProduct = allDetails.reduce((acc, item) => {
         const revenue = parseNumber(item.SoLuong) * parseNumber(item.DonGia);
         acc[item.MaSP] = (acc[item.MaSP] || 0) + revenue;
         return acc;
     }, {});
-
-    const sortedProducts = Object.entries(revenueByProduct)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 5);
-
-    const topProductChartContainer = document.getElementById('topProductRevenueChartContainer');
-    const topProductEmptyMessage = document.getElementById('topProductRevenueChartEmpty');
-
-    if (sortedProducts.length === 0) {
-        topProductChartContainer.classList.add('hidden');
-        topProductEmptyMessage.classList.remove('hidden');
-    } else {
-        topProductChartContainer.classList.remove('hidden');
-        topProductEmptyMessage.classList.add('hidden');
-        charts.topProduct = new Chart(ctxTopProduct, {
+    const top5Products = Object.entries(revenueByProduct).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    
+    toggleChartVisibility('topProductRevenueChart', top5Products.length > 0);
+    if (top5Products.length > 0) {
+        charts.topProduct = new Chart(document.getElementById('topProductRevenueChart').getContext('2d'), {
             type: 'bar',
-            data: {
-                labels: sortedProducts.map(([maSP]) => (database.sanPhams.find(p => p.MaSP === maSP) || { TenSP: 'N/A' }).TenSP),
-                datasets: [{
-                    label: 'Doanh Thu',
-                    data: sortedProducts.map(([, revenue]) => revenue),
-                    backgroundColor: 'rgba(59, 130, 246, 0.6)'
-                }]
-            },
+            data: { labels: top5Products.map(([maSP]) => (productMap.get(maSP) || { TenSP: 'N/A' }).TenSP), datasets: [{ label: 'Doanh Thu', data: top5Products.map(p => p[1]), backgroundColor: 'rgba(59, 130, 246, 0.6)' }] },
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
     }
 }
 
-function renderKhoHangView(processedData) {
-    const { sanPhamsWithTonKho } = processedData;
-    const totalValue = sanPhamsWithTonKho.reduce((sum, p) => sum + (p.TonKho * parseNumber(p.GiaNhap)), 0);
-    const lowStockItems = sanPhamsWithTonKho.filter(p => p.TonKho <= parseNumber(p.TonKhoToiThieu));
+function renderKhoHang({ productsWithInventory }) {
+    const totalValue = productsWithInventory.reduce((sum, p) => sum + (p.TonKho * parseNumber(p.GiaNhap)), 0);
+    const lowStockItems = productsWithInventory.filter(p => p.TonKho <= parseNumber(p.TonKhoToiThieu)).sort((a,b) => a.TonKho - b.TonKho);
 
     document.getElementById('kpi-gia-tri-kho').textContent = formatCurrency(totalValue);
     document.getElementById('kpi-sap-het-hang').textContent = lowStockItems.length;
 
     const tbody = document.getElementById('lowStockTableBody');
     tbody.innerHTML = lowStockItems.length > 0
-        ? lowStockItems.map(p => `<tr class="border-b"><td class="px-4 py-3 font-medium">${p.TenSP}</td><td class="px-4 py-3 text-center font-bold text-rose-500">${p.TonKho}</td><td class="px-4 py-3 text-center">${p.TonKhoToiThieu}</td></tr>`).join('')
-        : `<tr><td colspan="3" class="px-4 py-3 text-center text-slate-500">Không có sản phẩm nào sắp hết hàng.</td></tr>`;
+        ? lowStockItems.map(p => `<tr class="border-b hover:bg-slate-50"><td class="px-4 py-3 font-medium">${p.TenSP}</td><td class="px-4 py-3 text-center font-bold text-rose-500">${p.TonKho}</td><td class="px-4 py-3 text-center">${parseNumber(p.TonKhoToiThieu)}</td></tr>`).join('')
+        : `<tr><td colspan="3" class="px-4 py-8 text-center text-slate-500">Tuyệt vời! Không có sản phẩm nào sắp hết hàng.</td></tr>`;
 }
 
-function renderKhachHangView(processedData) {
-    const { donHangsWithTotals } = processedData;
-    const spendingByCustomer = donHangsWithTotals.reduce((acc, order) => {
+function renderKhachHang({ processedOrders, customerMap }) {
+    const spendingByCustomer = processedOrders.reduce((acc, order) => {
         acc[order.MaKH] = (acc[order.MaKH] || 0) + order.TongTien;
         return acc;
     }, {});
 
-    const sortedCustomers = Object.entries(spendingByCustomer)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 5);
+    const top5Customers = Object.entries(spendingByCustomer).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
-    const ctx = document.getElementById('topCustomerChart').getContext('2d');
-    if (charts.topCustomer) charts.topCustomer.destroy();
-
-    const topCustomerChartContainer = document.getElementById('topCustomerChartContainer');
-    const topCustomerEmptyMessage = document.getElementById('topCustomerChartEmpty');
-
-    if (sortedCustomers.length === 0) {
-        topCustomerChartContainer.classList.add('hidden');
-        topCustomerEmptyMessage.classList.remove('hidden');
-    } else {
-        topCustomerChartContainer.classList.remove('hidden');
-        topCustomerEmptyMessage.classList.add('hidden');
-        charts.topCustomer = new Chart(ctx, {
+    toggleChartVisibility('topCustomerChart', top5Customers.length > 0);
+    if (top5Customers.length > 0) {
+        charts.topCustomer = new Chart(document.getElementById('topCustomerChart').getContext('2d'), {
             type: 'bar',
-            data: {
-                labels: sortedCustomers.map(([maKH]) => (database.khachHangs.find(c => c.MaKH === maKH) || { TenKH: 'N/A' }).TenKH),
-                datasets: [{
-                    label: 'Tổng Chi Tiêu',
-                    data: sortedCustomers.map(([, spending]) => spending),
-                    backgroundColor: 'rgba(16, 185, 129, 0.6)'
-                }]
-            },
+            data: { labels: top5Customers.map(([maKH]) => (customerMap.get(maKH) || { TenKH: 'N/A' }).TenKH), datasets: [{ label: 'Tổng Chi Tiêu', data: top5Customers.map(c => c[1]), backgroundColor: 'rgba(16, 185, 129, 0.6)' }] },
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
     }
 
-    const newCustomerIds = new Set(donHangsWithTotals.map(d => d.MaKH));
-    document.getElementById('total-customers').textContent = database.khachHangs.length;
-    document.getElementById('new-customers').textContent = newCustomerIds.size;
+    const customersInPeriod = new Set(processedOrders.map(o => o.MaKH));
+    document.getElementById('total-customers').textContent = customerMap.size;
+    document.getElementById('new-customers').textContent = customersInPeriod.size;
 }
 
-// --- EVENT HANDLERS & INITIALIZATION ---
+// --- ĐIỀU HƯỚNG VÀ KHỞI TẠO ---
 function showView(viewId, forceRender = false, processedData = null) {
     if (state.currentView === viewId && !forceRender) return;
+    
     state.currentView = viewId;
-
+    destroyCharts(); // Hủy các biểu đồ cũ
     document.getElementById('views-container').innerHTML = viewTemplates[viewId];
-
+    
     const renderFunction = {
         tongQuan: renderTongQuan,
         phanTichBanHang: renderPhanTichBanHang,
-        khoHang: renderKhoHangView,
-        khachHang: renderKhachHangView
+        khoHang: renderKhoHang,
+        khachHang: renderKhachHang
     }[viewId];
 
     if (renderFunction && processedData) {
-        setTimeout(() => renderFunction(processedData), 0);
+        // Dùng setTimeout để trình duyệt có thời gian render HTML trước khi vẽ biểu đồ
+        setTimeout(() => renderFunction(processedData), 0); 
     }
 
+    // Cập nhật tiêu đề và trạng thái active của menu
     const titles = {
         tongQuan: 'Dashboard Tổng Quan',
         phanTichBanHang: 'Phân Tích Bán Hàng',
@@ -465,19 +419,22 @@ function showView(viewId, forceRender = false, processedData = null) {
         khachHang: 'Phân Tích Khách Hàng'
     };
     document.getElementById('view-title').textContent = titles[viewId];
-
     document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('bg-amber-50', 'border-b-4', 'sm:border-b-0', 'sm:border-r-4', 'border-amber-500', 'text-amber-600');
-        link.classList.add('text-slate-600');
+        const isActive = link.getAttribute('onclick').includes(`'${viewId}'`);
+        link.classList.toggle('bg-amber-50', isActive);
+        link.classList.toggle('border-b-4', isActive);
+        link.classList.toggle('sm:border-b-0', isActive);
+        link.classList.toggle('sm:border-r-4', isActive);
+        link.classList.toggle('border-amber-500', isActive);
+        link.classList.toggle('text-amber-600', isActive);
+        link.classList.toggle('text-slate-600', !isActive);
     });
-    const activeLink = document.querySelector(`.nav-link[onclick="showView('${viewId}')"]`);
-    activeLink.classList.add('bg-amber-50', 'border-b-4', 'sm:border-b-0', 'sm:border-r-4', 'border-amber-500', 'text-amber-600');
 }
 
 document.getElementById('date-filter').addEventListener('change', renderAll);
 
 window.onload = () => {
-    if (loadDataFromUrl()) {
+    if (loadAndSanitizeDataFromUrl()) {
         document.getElementById('loading-state').classList.add('hidden');
         document.getElementById('app-container').classList.remove('hidden');
         document.getElementById('app-container').classList.add('flex');
